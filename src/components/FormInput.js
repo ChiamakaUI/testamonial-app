@@ -1,16 +1,7 @@
-import React from "react";
-// import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Input from "@material-ui/core/Input";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Radio from "@material-ui/core/Radio";
-// import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import React, { useContext, useState } from "react";
+import { FeedbackContext } from "../context/FeedbackContext";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -20,82 +11,79 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  file: {
-    border: "1px solid #fff",
-    width: "100%",
-    padding: "5px",
+  form: {
+    width: '100%',
+    height: '150px',
+    margin: "20px",
+    padding: "20px",
 
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+
+  formInput: {
+    display: 'block',
   },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
+
+
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
 }));
 
-export default function SignIn() {
+const SignIn = (props) => {
   const classes = useStyles();
+  const { addFeedback } = useContext(FeedbackContext);
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addFeedback(name, message);
+    setName('');
+    setMessage('');
+    history.replace('/');
+    
+}
+
+
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Share Your Story
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Input className={classes.file} type="file" />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="name"
-            label="Name"
-            name="name"
-            autoComplete="name"
-            autoFocus
-          />
+    <form onSubmit={handleSubmit}>
+      <div className={classes.form}>
+        <input
+          className={classes.formInput}
+          type="text"
+          placeholder="Your name"
+          value={name}
+          variant="outlined"
+          margin="normal"
+          required
+          onChange={(e) => setName(e.target.value)}
+        />
+        <br/>
 
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="message"
-            label="message"
-            type="message"
-            id="message"
-          />
+        <input
+          className={classes.formInput}
+          type="textarea"
+          placeholder="Your Feedback"
+          value={message}
+          variant="outlined"
+          margin="normal"
+          required
+          onChange={(e) => setMessage(e.target.value)}
+        />
 
-          <FormControlLabel
-            control={<Radio value="customer" color="primary" />}
-            label="Customer"
-          />
-          <FormControlLabel
-            control={<Radio value="vendor" color="primary" />}
-            label="Vendor"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Send
-          </Button>
-        </form>
+        <input
+          type="submit"
+          value="add Feedback"
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        />
       </div>
-      {/* <Box mt={8}>
-        
-      </Box> */}
-    </Container>
+    </form>
   );
-}
+};
+
+export default SignIn;

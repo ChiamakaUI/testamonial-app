@@ -1,0 +1,54 @@
+<Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Share Your Story
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Input className={classes.file} type="file" />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            label="Name"
+            name="name"
+            autoComplete="name"
+            autoFocus
+          />
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="message"
+            label="message"
+            type="message"
+            id="message"
+          />
+
+          <FormControlLabel
+            control={<Radio value="customer" color="primary" />}
+            label="Customer"
+          />
+          <FormControlLabel
+            control={<Radio value="vendor" color="primary" />}
+            label="Vendor"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Send
+          </Button>
+        </form>
+      </div>
+      {/* <Box mt={8}>
+        
+      </Box> */}
+    </Container>

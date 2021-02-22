@@ -3,13 +3,19 @@ import FormInput from './components/FormInput';
 import Header from './components/Header';
 import Stories from './components/Stories';
 import { Route } from "react-router-dom";
+import FeedbackContextProvider from './context/FeedbackContext';
 
 
 
 function App() {
   return (
     <div>
-      <Header />
+      <FeedbackContextProvider>
+
+      
+        <Header />
+        {/* <FormInput/> */}
+        
       
       <Route path="/" exact> 
         <Stories />
@@ -17,7 +23,9 @@ function App() {
       </Route>
        <Route path="/FormInput" exact> 
          <FormInput/>
-      </Route>
+        </Route>
+          
+        </FeedbackContextProvider>
     </div>
   );
 }
